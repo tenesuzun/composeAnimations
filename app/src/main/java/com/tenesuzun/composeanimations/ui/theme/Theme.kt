@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import com.tenesuzun.composeanimations.EffectMode
+import com.tenesuzun.composeanimations.ui.effects.EffectMode
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,

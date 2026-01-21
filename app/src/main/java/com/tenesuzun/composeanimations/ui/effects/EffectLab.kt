@@ -9,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.tenesuzun.composeanimations.EffectMode
 import com.tenesuzun.composeanimations.ui.theme.effectAccent
 
 /**

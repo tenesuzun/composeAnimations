@@ -20,9 +20,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.tenesuzun.composeanimations.EffectMode
 import com.tenesuzun.composeanimations.R
 import com.tenesuzun.composeanimations.ui.effects.EffectCardShell
+import com.tenesuzun.composeanimations.ui.effects.EffectMode
 
 @Composable
 fun HorizontalCard(label: String, effectMode: EffectMode) {

@@ -25,7 +25,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
-import com.tenesuzun.composeanimations.EffectMode
 import com.tenesuzun.composeanimations.ui.blurLayer
 import com.tenesuzun.composeanimations.ui.glow
 import com.tenesuzun.composeanimations.ui.neumorphCached
