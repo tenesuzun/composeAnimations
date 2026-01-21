@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -52,6 +53,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = Screen.Home.route,
                         modifier = Modifier
                             .fillMaxSize()
+                            .safeContentPadding()
                             .hazeSource(state = hazeState)
                     ) {
                         composable(Screen.Home.route) {
