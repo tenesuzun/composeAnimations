@@ -22,7 +22,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,7 +50,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ModernTheme {
-                Box(modifier = Modifier.fillMaxSize().background(brush = appBackgroundBrush()).systemBarsPadding()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(brush = appBackgroundBrush())
+                        .systemBarsPadding()
+                ) {
                     MockSceneScreen()
                 }
             }
@@ -74,32 +79,40 @@ fun MockSceneScreen() {
     }
 
     var effectMode by remember { mutableStateOf(EffectMode.HoverGlow) }
+    val hazeState = remember { HazeState() }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(appBackgroundBrush())
-            .windowInsetsPadding(WindowInsets.statusBars)
-    ) {
-        val hazeState = remember { HazeState() }
-
-        Column(modifier = Modifier
-            .haze(
-                hazeState,
-                backgroundColor = MaterialTheme.colorScheme.background,
-                tint = Color.Black.copy(alpha = .2f),
-                blurRadius = 30.dp,
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .haze(
+                    state = hazeState,
+                    backgroundColor = MaterialTheme.colorScheme.background,
+                    tint = Color.Black.copy(alpha = .2f),
+                    blurRadius = 30.dp,
                 )
-            .fillMaxSize()
         ) {
-            GlassTopBar(title = "Topbar")
+            GlassTopBar(
+                title = "Topbar",
+                modifier = Modifier
+                    .windowInsetsPadding(WindowInsets.statusBars)
+                    .hazeChild(
+                        state = hazeState,
+                        shape = RoundedCornerShape(28.dp)
+                    )
+            )
 
             Box(modifier = Modifier.weight(1f)) {
                 LazyColumn(
                     state = listState,
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
-                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 24.dp)
+                    contentPadding = PaddingValues(
+                        start = 16.dp,
+                        end = 16.dp,
+                        top = 16.dp,
+                        bottom = 24.dp
+                    )
                 ) {
                     item {
                         EffectsLab(
@@ -116,7 +129,6 @@ fun MockSceneScreen() {
                         )
                     }
 
-                    // Yatay kart
                     item {
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
@@ -150,7 +162,12 @@ fun MockSceneScreen() {
             }
 
             GlassBottomBar(
-                modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars).hazeChild(state = hazeState, shape = CircleShape)
+                modifier = Modifier
+                    .windowInsetsPadding(WindowInsets.navigationBars)
+                    .hazeChild(
+                        state = hazeState,
+                        shape = RoundedCornerShape(28.dp)
+                    )
             )
         }
     }

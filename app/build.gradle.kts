@@ -7,9 +7,7 @@ plugins {
 android {
     buildFeatures { compose = true }
     namespace = "com.tenesuzun.composeanimations"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.tenesuzun.composeanimations"
@@ -53,5 +51,9 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation("dev.chrisbanes.haze:haze-jetpack-compose:0.4.1")
+    // Navigation
+    implementation(libs.navigation.compose)
+
+    // Haze for Glassmorphism
+    implementation(libs.haze.jetpack.compose)
 }

@@ -29,7 +29,10 @@ import androidx.compose.ui.unit.dp
 import com.tenesuzun.composeanimations.ui.blurLayer
 
 @Composable
-fun GlassTopBar(title: String) {
+fun GlassTopBar(
+    title: String,
+    modifier: Modifier = Modifier
+) {
     val alpha by animateFloatAsState(
         targetValue = 0.55f + 0.25f,
         animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
