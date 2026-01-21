@@ -40,7 +40,6 @@ import com.tenesuzun.composeanimations.ui.theme.effectAccent
 @Composable
 fun EffectCardShell(
     effectMode: EffectMode,
-    scrollProgress: Float,
     shape: RoundedCornerShape,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
@@ -81,7 +80,7 @@ fun EffectCardShell(
 
     // blur grows with scroll (only used in BlurOnScroll mode)
     val blurDp by animateDpAsState(
-        targetValue = if (effectMode == EffectMode.BlurOnScroll) (2.dp + 18.dp * scrollProgress) else 0.dp,
+        targetValue = if (effectMode == EffectMode.BlurOnScroll) (2.dp + 18.dp) else 0.dp,
         animationSpec = spring(stiffness = Spring.StiffnessLow),
         label = "cardBlur"
     )

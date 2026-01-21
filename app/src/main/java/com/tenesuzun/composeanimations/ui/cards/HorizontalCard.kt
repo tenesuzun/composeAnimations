@@ -25,12 +25,11 @@ import com.tenesuzun.composeanimations.R
 import com.tenesuzun.composeanimations.ui.effects.EffectCardShell
 
 @Composable
-fun HorizontalCard(label: String, effectMode: EffectMode, scrollProgress: Float) {
+fun HorizontalCard(label: String, effectMode: EffectMode) {
     val shape = RoundedCornerShape(18.dp)
 
     EffectCardShell(
         effectMode = effectMode,
-        scrollProgress = scrollProgress,
         shape = shape,
         modifier = Modifier.size(width = 160.dp, height = 190.dp)
     ) {

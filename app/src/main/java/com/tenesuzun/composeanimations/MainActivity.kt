@@ -22,16 +22,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.tenesuzun.composeanimations.ui.cards.HorizontalCard
 import com.tenesuzun.composeanimations.ui.cards.VerticalCard
@@ -40,7 +40,9 @@ import com.tenesuzun.composeanimations.ui.systembars.GlassBottomBar
 import com.tenesuzun.composeanimations.ui.systembars.GlassTopBar
 import com.tenesuzun.composeanimations.ui.theme.ModernTheme
 import com.tenesuzun.composeanimations.ui.theme.appBackgroundBrush
-import kotlin.math.min
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.haze
+import dev.chrisbanes.haze.hazeChild
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +50,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ModernTheme {
-                Surface(modifier = Modifier.fillMaxSize().systemBarsPadding(), color = MaterialTheme.colorScheme.background) {
+                Box(modifier = Modifier.fillMaxSize().background(brush = appBackgroundBrush()).systemBarsPadding()) {
                     MockSceneScreen()
                 }
             }
@@ -73,26 +75,24 @@ fun MockSceneScreen() {
 
     var effectMode by remember { mutableStateOf(EffectMode.HoverGlow) }
 
-    // Progress değeri ancak eksikleri var gibi
-    val scrollProgress by remember(listState) {
-        derivedStateOf {
-            val px = listState.firstVisibleItemScrollOffset.toFloat()
-            min(1f, px / 240f)
-        }
-    }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(appBackgroundBrush())
             .windowInsetsPadding(WindowInsets.statusBars)
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        val hazeState = remember { HazeState() }
 
-            GlassTopBar(
-                title = "Topbar",
-                progress = scrollProgress,
-            )
+        Column(modifier = Modifier
+            .haze(
+                hazeState,
+                backgroundColor = MaterialTheme.colorScheme.background,
+                tint = Color.Black.copy(alpha = .2f),
+                blurRadius = 30.dp,
+                )
+            .fillMaxSize()
+        ) {
+            GlassTopBar(title = "Topbar")
 
             Box(modifier = Modifier.weight(1f)) {
                 LazyColumn(
@@ -113,7 +113,6 @@ fun MockSceneScreen() {
                         VerticalCard(
                             title = title,
                             effectMode = effectMode,
-                            scrollProgress = scrollProgress
                         )
                     }
 
@@ -135,7 +134,6 @@ fun MockSceneScreen() {
                                 HorizontalCard(
                                     label = label,
                                     effectMode = effectMode,
-                                    scrollProgress = scrollProgress
                                 )
                             }
                         }
@@ -146,14 +144,13 @@ fun MockSceneScreen() {
                         VerticalCard(
                             title = title,
                             effectMode = effectMode,
-                            scrollProgress = scrollProgress
                         )
                     }
                 }
             }
 
             GlassBottomBar(
-                modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)
+                modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars).hazeChild(state = hazeState, shape = CircleShape)
             )
         }
     }

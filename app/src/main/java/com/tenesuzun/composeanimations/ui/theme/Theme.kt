@@ -56,9 +56,9 @@ fun ModernTheme(content: @Composable () -> Unit) {
 fun appBackgroundBrush(): Brush =
     Brush.linearGradient(
         colors = listOf(
-            Color(0xFF060913),
-            Color(0xFF09112A),
-            Color(0xFF070A12),
+            Color(0xFF2D0475),
+            Color(0xFF8D255A),
+            Color(0xFF2D0909),
         )
     )
 

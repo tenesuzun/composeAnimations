@@ -29,15 +29,15 @@ import androidx.compose.ui.unit.dp
 import com.tenesuzun.composeanimations.ui.blurLayer
 
 @Composable
-fun GlassTopBar(title: String, progress: Float) {
+fun GlassTopBar(title: String) {
     val alpha by animateFloatAsState(
-        targetValue = 0.55f + 0.25f * progress,
+        targetValue = 0.55f + 0.25f,
         animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
         label = "topbarAlpha"
     )
 
     val blurDp by animateDpAsState(
-        targetValue = (6.dp + 14.dp * progress),
+        targetValue = (6.dp + 14.dp),
         animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
         label = "topbarBlur"
     )
@@ -80,11 +80,11 @@ fun GlassTopBar(title: String, progress: Float) {
             ) {
                 Text(text = title, style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onSurface)
                 Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    text = "scroll: ${(progress * 100).toInt()}%",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-                )
+//                Text(
+//                    text = "scroll: ${(100).toInt()}%",
+//                    style = MaterialTheme.typography.labelMedium,
+//                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+//                )
             }
         }
     }
