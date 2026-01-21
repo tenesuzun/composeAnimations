@@ -5,7 +5,6 @@ plugins {
 }
 
 android {
-    buildFeatures { compose = true }
     namespace = "com.tenesuzun.composeanimations"
     compileSdk = 36
 
@@ -22,13 +21,18 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
+
     buildFeatures {
         compose = true
     }
@@ -43,6 +47,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -54,6 +59,7 @@ dependencies {
     // Navigation
     implementation(libs.navigation.compose)
 
-    // Haze for Glassmorphism
-    implementation(libs.haze.jetpack.compose)
+    // Haze 1.7.1 - Background Blur Library
+    implementation(libs.haze)
+    implementation(libs.haze.materials)
 }

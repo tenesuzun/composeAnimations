@@ -27,20 +27,20 @@ fun GlassBottomBar(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp)
-            .shadow(18.dp, RoundedCornerShape(28.dp))
-            .clip(RoundedCornerShape(28.dp))
-            .border(
-                width = Dp.Hairline,
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color.White.copy(alpha = .8f),
-                        Color.White.copy(alpha = .2f),
-                    ),
-                ),
-                shape = RoundedCornerShape(28.dp)
-            )
-            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.7f))
+//            .padding(horizontal = 16.dp, vertical = 12.dp)
+//            .shadow(18.dp, RoundedCornerShape(28.dp))
+//            .clip(RoundedCornerShape(28.dp))
+//            .border(
+//                width = Dp.Hairline,
+//                brush = Brush.verticalGradient(
+//                    colors = listOf(
+//                        Color.White.copy(alpha = .8f),
+//                        Color.White.copy(alpha = .2f),
+//                    ),
+//                ),
+//                shape = RoundedCornerShape(28.dp)
+//            )
+//            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.7f))
             .padding(horizontal = 18.dp, vertical = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
