@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.getValue
@@ -47,13 +48,14 @@ class MainActivity : ComponentActivity() {
                 val hazeState = rememberHazeState()
                 val listState = rememberLazyListState()
 
-                Box(modifier = Modifier.fillMaxSize()) {
+                Box(modifier = Modifier.fillMaxSize().systemBarsPadding()) {
                     NavHost(
                         navController = navController,
                         startDestination = Screen.Home.route,
                         modifier = Modifier
                             .fillMaxSize()
                             .safeContentPadding()
+                            .systemBarsPadding()
                             .hazeSource(state = hazeState)
                     ) {
                         composable(Screen.Home.route) {

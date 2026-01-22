@@ -47,6 +47,8 @@ fun SearchScreen(modifier: Modifier = Modifier) {
 }
 
 /**
+ * Parallax Efekti
+ *
  * https://developer.android.com/develop/ui/compose/quick-guides/content/parallax-scrolling
  */
 @Composable
