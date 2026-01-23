@@ -61,7 +61,7 @@ fun FavoritesScreen(modifier: Modifier = Modifier) {
             .systemBarsPadding(),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        // Multi-Browse Carousel
+        // Multi-Browse - Farklı boyutlar için
         CarouselSection(title = "Multi-Browse Carousel") {
             HorizontalMultiBrowseCarousel(
                 state = rememberCarouselState { items.size },
@@ -91,16 +91,18 @@ fun FavoritesScreen(modifier: Modifier = Modifier) {
             }
         }
 
-        // Hero Carousel (büyük ortadaki item efekti)
+        // Hero Carousel - Güncellenmiş (tek büyük item, yanında küçük peek)
         CarouselSection(title = "Hero Carousel") {
             HorizontalMultiBrowseCarousel(
                 state = rememberCarouselState { items.size },
-                preferredItemWidth = 280.dp,
+                preferredItemWidth = 350.dp,  // Ekran genişliğine yakın
+                minSmallItemWidth = 56.dp,    // Yan peek çok küçük
+                maxSmallItemWidth = 80.dp,    // Yan peek maksimum
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(280.dp),
+                    .height(320.dp),          // Daha yüksek
                 itemSpacing = 8.dp,
-                contentPadding = PaddingValues(horizontal = 24.dp)
+                contentPadding = PaddingValues(horizontal = 16.dp)
             ) { index ->
                 HeroCarouselCard(item = items[index])
             }
