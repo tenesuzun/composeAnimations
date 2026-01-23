@@ -23,6 +23,7 @@ import androidx.navigation.compose.rememberNavController
 import com.tenesuzun.composeanimations.navigation.Screen
 import com.tenesuzun.composeanimations.ui.screens.FavoritesScreen
 import com.tenesuzun.composeanimations.ui.screens.HomeScreen
+import com.tenesuzun.composeanimations.ui.screens.MenuScreen
 import com.tenesuzun.composeanimations.ui.screens.ProfileScreen
 import com.tenesuzun.composeanimations.ui.screens.SearchScreen
 import com.tenesuzun.composeanimations.ui.systembars.GlassBottomBar
@@ -69,6 +70,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(Screen.Profile.route) {
                             ProfileScreen()
+                        }
+                        composable(Screen.Menu.route) {
+                            MenuScreen()
                         }
                     }
 

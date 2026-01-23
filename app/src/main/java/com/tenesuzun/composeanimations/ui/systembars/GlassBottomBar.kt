@@ -68,5 +68,15 @@ fun GlassBottomBar(
                     MaterialTheme.colorScheme.onSurface
             )
         }
+        IconButton(onClick = { onNavigate(Screen.Menu) }) {
+            Icon(
+                painterResource(R.drawable.ic_menu),
+                contentDescription = "Menu",
+                tint = if (currentRoute == Screen.Menu.route)
+                    MaterialTheme.colorScheme.primary
+                else
+                    MaterialTheme.colorScheme.onSurface
+            )
+        }
     }
 }

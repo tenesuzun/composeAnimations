@@ -36,11 +36,15 @@ import com.tenesuzun.composeanimations.ui.theme.effectAccent
  * - seçili efekti her bir kart için uygular
  * - Gözle ayırt edilebilir farklılıklar uygular (Kısmen)
  */
+// EffectCardShell.kt - Blur hesaplaması
 @Composable
 fun EffectCardShell(
     effectMode: EffectMode,
     shape: RoundedCornerShape,
     modifier: Modifier = Modifier,
+    scrollOffset: Float = 0f,
+    itemIndex: Int = 0,
+    firstVisibleIndex: Int = 0,
     content: @Composable () -> Unit
 ) {
     val interaction = remember { MutableInteractionSource() }
@@ -77,11 +81,32 @@ fun EffectCardShell(
         label = "cardScale"
     )
 
-    // blur grows with scroll (only used in BlurOnScroll mode)
-    val blurDp by animateDpAsState(
-        targetValue = if (effectMode == EffectMode.BlurOnScroll) (2.dp + 18.dp) else 0.dp,
-        animationSpec = spring(stiffness = Spring.StiffnessLow),
-        label = "cardBlur"
+    // ===== BLUR ON SCROLL =====
+    // Dinamik blur hesaplama - üstteki kartlar (ekranın üstüne yakın) daha blurlu
+    // itemIndex: Kartın listedeki sırası
+    // firstVisibleIndex: Ekranda görünen ilk kartın index'i
+    // scrollOffset: İlk görünen kartın ne kadar scroll edildiği (px)
+    val targetBlurAmount = if (effectMode == EffectMode.BlurOnScroll) {
+        val distanceFromTop = (itemIndex - firstVisibleIndex).coerceAtLeast(0)
+        val normalizedScroll = (scrollOffset / 150f).coerceIn(0f, 1f) // 150px'de maksimum blur
+
+        when (distanceFromTop) {
+            0 -> 20.dp * normalizedScroll  // İlk görünür item - scroll'a göre blur artar (daha güçlü)
+            1 -> 14.dp * normalizedScroll  // İkinci item - orta blur
+            2 -> 8.dp * normalizedScroll   // Üçüncü item - hafif blur
+            3 -> 4.dp * normalizedScroll   // Dördüncü item - minimal blur
+            else -> 0.dp                   // Geri kalanlar - net
+        }
+    } else 0.dp
+
+    // Animasyonlu blur değeri - smooth geçiş sağlar
+    val blurOnScrollAmount by animateDpAsState(
+        targetValue = targetBlurAmount,
+        animationSpec = spring(
+            stiffness = Spring.StiffnessLow,
+            dampingRatio = Spring.DampingRatioMediumBouncy
+        ),
+        label = "blurOnScroll"
     )
 
     // Neumorph “depth” animates with press
@@ -170,14 +195,9 @@ fun EffectCardShell(
                 )
         )
 
-        // Underlay that gets blurred (keeps TEXT crisp; only the underlay blurs)
-        if (effectMode == EffectMode.BlurOnScroll || effectMode == EffectMode.Glassmorphism) {
-            val underlayBlur = when (effectMode) {
-                EffectMode.BlurOnScroll -> blurDp
-                EffectMode.Glassmorphism -> 10.dp
-                else -> 0.dp
-            }
-
+        // ===== GLASSMORPHISM UNDERLAY =====
+        // Sabit blur efekti - cam görünümü için
+        if (effectMode == EffectMode.Glassmorphism) {
             Box(
                 modifier = Modifier
                     .matchParentSize()
@@ -190,7 +210,34 @@ fun EffectCardShell(
                             )
                         )
                     )
-                    .then(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) Modifier.blurLayer(underlayBlur) else Modifier)
+                    .then(
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                            Modifier.blurLayer(10.dp)
+                        else Modifier
+                    )
+            )
+        }
+
+        // ===== BLUR ON SCROLL UNDERLAY =====
+        // Dinamik blur efekti - scroll pozisyonuna göre değişir
+        if (effectMode == EffectMode.BlurOnScroll && blurOnScrollAmount > 0.dp) {
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .background(
+                        Brush.linearGradient(
+                            listOf(
+                                accent.copy(alpha = 0.30f),
+                                MaterialTheme.colorScheme.tertiary.copy(alpha = 0.20f),
+                                accent.copy(alpha = 0.10f)
+                            )
+                        )
+                    )
+                    .then(
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                            Modifier.blurLayer(blurOnScrollAmount)
+                        else Modifier
+                    )
             )
         }
 
